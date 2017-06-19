@@ -37,18 +37,122 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
+    _this.state = {
+      currentPage: 0,
+      email: '',
+      dropText: 'Drop your FASTA file here or click here to browse file.'
+    };
     _this.onDrop = _this.onDrop.bind(_this);
+    _this.onContinue = _this.onContinue.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
     key: 'onDrop',
     value: function onDrop(files) {
-      alert(files[0].size);
+      this.setState({ dropText: 'File selected: ' + files[0].name.substring(0, 20) + (files[0].name.length > 10 ? '...' : '') });
+    }
+  }, {
+    key: 'onContinue',
+    value: function onContinue() {
+      window.open('http://localhost:7777/jbrowse/?data=sample_data%2Fjson%2Fvolvox&loc=ctgA%3A1..10003&tracks=DNA&highlight=');
+    }
+  }, {
+    key: 'showPage',
+    value: function showPage() {
+      var _this2 = this;
+
+      if (this.state.currentPage === 0) {
+        return _react2.default.createElement(
+          _semanticUiReact.Container,
+          { text: true },
+          _react2.default.createElement(
+            _semanticUiReact.Header,
+            { as: 'h2' },
+            'Upload'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'This is a genome browser for staphylococcus aureus.'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Upload an aligned staph genome as a FASTA file:'
+          ),
+          _react2.default.createElement(
+            _reactDropzone2.default,
+            { onDropRejected: function onDropRejected() {
+                alert("File not accepted.");
+              }, multiple: false, maxSize: 10242880, onDropAccepted: this.onDrop },
+            _react2.default.createElement(
+              'p',
+              { style: { marginTop: 55, marginLeft: 25, marginRight: 25 } },
+              this.state.dropText
+            )
+          ),
+          _react2.default.createElement(_semanticUiReact.Input, { onChange: function onChange(event) {
+              _this2.setState({ email: event.target.value });
+            }, placeholder: 'Your Email' }),
+          _react2.default.createElement(
+            _semanticUiReact.Button,
+            { onClick: this.onContinue, style: { marginTop: 20, marginLeft: 15 }, primary: true },
+            'Continue'
+          )
+        );
+      } else if (this.state.currentPage === 1) {
+        return _react2.default.createElement(
+          _semanticUiReact.Container,
+          { text: true },
+          _react2.default.createElement(
+            _semanticUiReact.Header,
+            { as: 'h2' },
+            'Orthology'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Orthology'
+          )
+        );
+      } else if (this.state.currentPage === 2) {
+        return _react2.default.createElement(
+          _semanticUiReact.Container,
+          { text: true },
+          _react2.default.createElement(
+            _semanticUiReact.Header,
+            { as: 'h2' },
+            'Methods'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Methods'
+          )
+        );
+      } else if (this.state.currentPage === 3) {
+        return _react2.default.createElement(
+          _semanticUiReact.Container,
+          { text: true },
+          _react2.default.createElement(
+            _semanticUiReact.Header,
+            { as: 'h2' },
+            'About'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'About'
+          )
+        );
+      }
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       return _react2.default.createElement(
         'div',
         null,
@@ -69,31 +173,27 @@ var App = function (_React$Component) {
         _react2.default.createElement(_semanticUiReact.Divider, null),
         _react2.default.createElement(
           _semanticUiReact.Container,
-          { text: true },
+          null,
           _react2.default.createElement(
-            'p',
-            null,
-            'This is a genome browser for staphylococcus aureus.'
+            _semanticUiReact.Menu,
+            { style: { float: 'left' }, pointing: true, secondary: true, vertical: true },
+            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Upload', active: this.state.currentPage === 0, onClick: function onClick() {
+                _this3.setState({ currentPage: 0 });
+              } }),
+            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Orthology', active: this.state.currentPage === 1, onClick: function onClick() {
+                _this3.setState({ currentPage: 1 });
+              } }),
+            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Methods', active: this.state.currentPage === 2, onClick: function onClick() {
+                _this3.setState({ currentPage: 2 });
+              } }),
+            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'About', active: this.state.currentPage === 3, onClick: function onClick() {
+                _this3.setState({ currentPage: 3 });
+              } })
           ),
           _react2.default.createElement(
-            'p',
-            null,
-            'Upload an aligned staph genome as a FASTA file:'
-          ),
-          _react2.default.createElement(
-            _reactDropzone2.default,
-            { multiple: false, maxSize: 5242880, onDrop: this.onDrop },
-            _react2.default.createElement(
-              'p',
-              { style: { marginTop: 55, marginLeft: 25, marginRight: 25 } },
-              'Drop your FASTA file here or click here to browse file.'
-            )
-          ),
-          _react2.default.createElement(_semanticUiReact.Divider, null),
-          _react2.default.createElement(
-            _semanticUiReact.Button,
-            { primary: true },
-            'Continue'
+            _semanticUiReact.Container,
+            { style: { float: 'left', width: '70%', paddingLeft: 30, paddingTop: 15 } },
+            this.showPage()
           )
         )
       );
