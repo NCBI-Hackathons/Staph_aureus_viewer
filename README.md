@@ -27,6 +27,10 @@ Run the best_reference.sh script
 
 `best_reference.sh`
 
+Output for best alignment 
+
+![My image]()
+
 
 
 
