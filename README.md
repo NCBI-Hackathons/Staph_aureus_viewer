@@ -13,4 +13,7 @@ The aim of this project is to develop a genome browser for Staphylococcus aureus
 __Dependencies__
 
 pyfasta (https://pypi.python.org/pypi/pyfasta/)
+
 BLAST+ (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
+
+
