@@ -17,5 +17,12 @@ pyfasta (https://pypi.python.org/pypi/pyfasta/)
 BLAST+ (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
 
 
+## Find the best reference genome for alignment
+
+Run the best_reference.sh script
+
+`best_reference.sh`
+
+
 
 
