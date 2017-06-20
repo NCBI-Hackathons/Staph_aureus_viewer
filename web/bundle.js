@@ -120,7 +120,7 @@ var App = function (_React$Component) {
           ),
           _react2.default.createElement(
             _semanticUiReact.Button,
-            { onClick: this.onContinue, primary: true },
+            { color: 'facebook', onClick: this.onContinue, primary: true },
             'Continue'
           )
         );
@@ -128,7 +128,7 @@ var App = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           { style: { width: '100%', height: 600 } },
-          _react2.default.createElement('iframe', { style: { border: 0, width: '100%', height: 600 }, src: 'http://localhost:7777/jbrowse/?data=sample_data%2Fjson%2Fvolvox&loc=ctgA%3A1..10366&tracks=DNA&highlight=' })
+          _react2.default.createElement('iframe', { style: { border: 0, width: '100%', height: 600 }, src: 'dalliance.html' })
         );
       } else if (this.state.currentPage === 2) {
         return _react2.default.createElement(

@@ -46,14 +46,14 @@ export default class App extends React.Component {
           <p>You will receive a url link to your annotated genome.</p>
           <Input onChange={(event) => { this.setState({ email: event.target.value }) }} placeholder='Your Email' />
           </Segment>
-          <Button onClick={this.onContinue} primary>Continue</Button>
+          <Button color='facebook' onClick={this.onContinue} primary>Continue</Button>
         </Container>
       )
     } else if (this.state.currentPage === 1) {
       return (
-        <div style={{ width: '100%', height: 600 }}>
-          <iframe style={{ border: 0, width: '100%', height: 600 }} src='http://localhost:7777/jbrowse/?data=sample_data%2Fjson%2Fvolvox&loc=ctgA%3A1..10366&tracks=DNA&highlight='></iframe>
-        </div>
+        <Container>
+          <iframe style={{ border: 0, width: '100%', height: 600 }} src='dalliance.html'></iframe>
+        </Container>
       )
     } else if (this.state.currentPage === 2) {
       return (
