@@ -10,6 +10,7 @@ The aim of this project is to develop a genome browser for Staphylococcus aureus
 3. Predict orthologs and report recent gene duplications, reaarangements and other structural variation between Staphylococcus aureus strains
 
 
-Dependencies:
+__Dependencies__
 
 pyfasta (https://pypi.python.org/pypi/pyfasta/)
+BLAST+ (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
