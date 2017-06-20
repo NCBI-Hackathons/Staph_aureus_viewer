@@ -31,6 +31,7 @@
     "babelify": "^7.3.0"
   },
   "dependencies": {
+    "papaparse": "^4.3.3",
     "react-dropzone": "^3.13.2",
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.68.5"

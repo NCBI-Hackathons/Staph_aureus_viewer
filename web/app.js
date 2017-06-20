@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Dropzone from 'react-dropzone'
+import Orthology from './orthology'
 import { Dropdown, Embed, Segment, Input, Container, Divider, Header, Button, Image, Menu } from 'semantic-ui-react'
 
 export default class App extends React.Component {
@@ -57,9 +58,9 @@ export default class App extends React.Component {
       )
     } else if (this.state.currentPage === 2) {
       return (
-        <Container text>
+        <Container style={{ paddingTop: 15 }} >
           <Header as='h2'>Orthology</Header>
-          <p>Orthology</p>
+          <Orthology />
         </Container>
       )
     } else if (this.state.currentPage === 3) {
