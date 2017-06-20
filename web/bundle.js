@@ -55,7 +55,7 @@ var App = function (_React$Component) {
   }, {
     key: 'onContinue',
     value: function onContinue() {
-      window.open('http://localhost:7777/jbrowse/?data=sample_data%2Fjson%2Fvolvox&loc=ctgA%3A1..10003&tracks=DNA&highlight=');
+      this.setState({ currentPage: 1 });
     }
   }, {
     key: 'showPage',
@@ -65,7 +65,7 @@ var App = function (_React$Component) {
       if (this.state.currentPage === 0) {
         return _react2.default.createElement(
           _semanticUiReact.Container,
-          { text: true },
+          { style: { paddingTop: 15 }, text: true },
           _react2.default.createElement(
             _semanticUiReact.Header,
             { as: 'h2' },
@@ -74,47 +74,61 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             'p',
             null,
-            'This is a genome browser for staphylococcus aureus.'
+            'This is a genome browser for Staphylococcus aureus.'
           ),
           _react2.default.createElement(
-            'p',
+            _semanticUiReact.Segment,
             null,
-            'Upload an aligned staph genome as a FASTA file:'
-          ),
-          _react2.default.createElement(
-            _reactDropzone2.default,
-            { onDropRejected: function onDropRejected() {
-                alert("File not accepted.");
-              }, multiple: false, maxSize: 10242880, onDropAccepted: this.onDrop },
             _react2.default.createElement(
               'p',
-              { style: { marginTop: 55, marginLeft: 25, marginRight: 25 } },
-              this.state.dropText
+              null,
+              'Choose a Staph strain to display:'
+            ),
+            _react2.default.createElement(_semanticUiReact.Dropdown, { placeholder: 'select strains', selection: true, options: [{ key: 'strain1', value: 'strain1', text: 'Strain1' }, { key: 'strain2', value: 'strain2', text: 'Strain2' }, { key: 'strain3', value: 'strain3', text: 'Strain3' }] })
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Segment,
+            null,
+            _react2.default.createElement(
+              'p',
+              null,
+              'Upload an assembled staph genome as a FASTA file:'
+            ),
+            _react2.default.createElement(
+              _reactDropzone2.default,
+              { onDropRejected: function onDropRejected() {
+                  alert("File not accepted.");
+                }, multiple: false, maxSize: 10242880, onDropAccepted: this.onDrop },
+              _react2.default.createElement(
+                'p',
+                { style: { marginTop: 55, marginLeft: 25, marginRight: 25 } },
+                this.state.dropText
+              )
             )
           ),
-          _react2.default.createElement(_semanticUiReact.Input, { onChange: function onChange(event) {
-              _this2.setState({ email: event.target.value });
-            }, placeholder: 'Your Email' }),
+          _react2.default.createElement(
+            _semanticUiReact.Segment,
+            null,
+            _react2.default.createElement(
+              'p',
+              null,
+              'You will receive a url link to your annotated genome.'
+            ),
+            _react2.default.createElement(_semanticUiReact.Input, { onChange: function onChange(event) {
+                _this2.setState({ email: event.target.value });
+              }, placeholder: 'Your Email' })
+          ),
           _react2.default.createElement(
             _semanticUiReact.Button,
-            { onClick: this.onContinue, style: { marginTop: 20, marginLeft: 15 }, primary: true },
+            { onClick: this.onContinue, primary: true },
             'Continue'
           )
         );
       } else if (this.state.currentPage === 1) {
         return _react2.default.createElement(
-          _semanticUiReact.Container,
-          { text: true },
-          _react2.default.createElement(
-            _semanticUiReact.Header,
-            { as: 'h2' },
-            'Orthology'
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Orthology'
-          )
+          'div',
+          { style: { width: '100%', height: 600 } },
+          _react2.default.createElement('iframe', { style: { border: 0, width: '100%', height: 600 }, src: 'http://localhost:7777/jbrowse/?data=sample_data%2Fjson%2Fvolvox&loc=ctgA%3A1..10366&tracks=DNA&highlight=' })
         );
       } else if (this.state.currentPage === 2) {
         return _react2.default.createElement(
@@ -123,6 +137,21 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             _semanticUiReact.Header,
             { as: 'h2' },
+            'Orthology'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Orthology'
+          )
+        );
+      } else if (this.state.currentPage === 3) {
+        return _react2.default.createElement(
+          _semanticUiReact.Container,
+          { text: true },
+          _react2.default.createElement(
+            _semanticUiReact.Header,
+            { as: 'h2' },
             'Methods'
           ),
           _react2.default.createElement(
@@ -131,7 +160,22 @@ var App = function (_React$Component) {
             'Methods'
           )
         );
-      } else if (this.state.currentPage === 3) {
+      } else if (this.state.currentPage === 4) {
+        return _react2.default.createElement(
+          _semanticUiReact.Container,
+          { text: true },
+          _react2.default.createElement(
+            _semanticUiReact.Header,
+            { as: 'h2' },
+            'Community'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Community'
+          )
+        );
+      } else if (this.state.currentPage === 5) {
         return _react2.default.createElement(
           _semanticUiReact.Container,
           { text: true },
@@ -155,7 +199,7 @@ var App = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { style: { marginBottom: 30 } },
         _react2.default.createElement(
           'div',
           { style: { paddingTop: 15, paddingLeft: 20 } },
@@ -170,31 +214,29 @@ var App = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement(_semanticUiReact.Divider, null),
         _react2.default.createElement(
-          _semanticUiReact.Container,
+          _semanticUiReact.Menu,
+          { style: { borderRadius: 0, paddingLeft: 125 }, color: 'blue', inverted: true },
+          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Upload', active: this.state.currentPage === 0, onClick: function onClick() {
+              _this3.setState({ currentPage: 0 });
+            } }),
+          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Orthology', active: this.state.currentPage === 2, onClick: function onClick() {
+              _this3.setState({ currentPage: 2 });
+            } }),
+          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Methods', active: this.state.currentPage === 3, onClick: function onClick() {
+              _this3.setState({ currentPage: 3 });
+            } }),
+          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Community', active: this.state.currentPage === 4, onClick: function onClick() {
+              _this3.setState({ currentPage: 4 });
+            } }),
+          _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'About', active: this.state.currentPage === 5, onClick: function onClick() {
+              _this3.setState({ currentPage: 5 });
+            } })
+        ),
+        _react2.default.createElement(
+          'div',
           null,
-          _react2.default.createElement(
-            _semanticUiReact.Menu,
-            { style: { float: 'left' }, pointing: true, secondary: true, vertical: true },
-            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Upload', active: this.state.currentPage === 0, onClick: function onClick() {
-                _this3.setState({ currentPage: 0 });
-              } }),
-            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Orthology', active: this.state.currentPage === 1, onClick: function onClick() {
-                _this3.setState({ currentPage: 1 });
-              } }),
-            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'Methods', active: this.state.currentPage === 2, onClick: function onClick() {
-                _this3.setState({ currentPage: 2 });
-              } }),
-            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'About', active: this.state.currentPage === 3, onClick: function onClick() {
-                _this3.setState({ currentPage: 3 });
-              } })
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Container,
-            { style: { float: 'left', width: '70%', paddingLeft: 30, paddingTop: 15 } },
-            this.showPage()
-          )
+          this.showPage()
         )
       );
     }

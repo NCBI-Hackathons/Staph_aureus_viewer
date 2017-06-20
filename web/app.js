@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Dropzone from 'react-dropzone'
-import { Input, Container, Divider, Header, Button, Image, Menu } from 'semantic-ui-react'
+import { Dropdown, Embed, Segment, Input, Container, Divider, Header, Button, Image, Menu } from 'semantic-ui-react'
 
 export default class App extends React.Component {
   constructor() {
@@ -16,42 +16,67 @@ export default class App extends React.Component {
   }
 
   onDrop(files) {
-    this.setState({dropText: 'File selected: '+files[0].name.substring(0, 20)+((files[0].name.length>10)?'...':'')})
+    this.setState({ dropText: 'File selected: ' + files[0].name.substring(0, 20) + ((files[0].name.length > 10) ? '...' : '') })
   }
 
   onContinue() {
-    window.open('http://localhost:7777/jbrowse/?data=sample_data%2Fjson%2Fvolvox&loc=ctgA%3A1..10003&tracks=DNA&highlight=')
+    this.setState({ currentPage: 1 })
   }
 
   showPage() {
     if (this.state.currentPage === 0) {
       return (
-        <Container text>
+        <Container style={{ paddingTop: 15 }} text>
           <Header as='h2'>Upload</Header>
-          <p>This is a genome browser for staphylococcus aureus.</p>
-          <p>Upload an aligned staph genome as a FASTA file:</p>
-          <Dropzone onDropRejected={()=>{alert("File not accepted.")}} multiple={false} maxSize={10242880} onDropAccepted={this.onDrop}>
+          <p>This is a genome browser for Staphylococcus aureus.</p>
+
+          <Segment>
+          <p>Choose a Staph strain to display:</p>
+          <Dropdown placeholder='select strains' selection options={[{key:'strain1', value:'strain1', text:'Strain1'}, {key:'strain2', value:'strain2', text:'Strain2'}, {key:'strain3', value:'strain3', text:'Strain3'}]} />
+          </Segment>
+
+          <Segment>
+          <p>Upload an assembled staph genome as a FASTA file:</p>
+          <Dropzone onDropRejected={() => { alert("File not accepted.") }} multiple={false} maxSize={10242880} onDropAccepted={this.onDrop}>
             <p style={{ marginTop: 55, marginLeft: 25, marginRight: 25 }}>{this.state.dropText}</p>
           </Dropzone>
-          <Input onChange={(event) => {this.setState({email: event.target.value})}} placeholder='Your Email' />
-          <Button onClick={this.onContinue} style={{marginTop: 20, marginLeft: 15}} primary>Continue</Button>
+          </Segment>
+
+          <Segment>
+          <p>You will receive a url link to your annotated genome.</p>
+          <Input onChange={(event) => { this.setState({ email: event.target.value }) }} placeholder='Your Email' />
+          </Segment>
+          <Button onClick={this.onContinue} primary>Continue</Button>
         </Container>
       )
     } else if (this.state.currentPage === 1) {
+      return (
+        <div style={{ width: '100%', height: 600 }}>
+          <iframe style={{ border: 0, width: '100%', height: 600 }} src='http://localhost:7777/jbrowse/?data=sample_data%2Fjson%2Fvolvox&loc=ctgA%3A1..10366&tracks=DNA&highlight='></iframe>
+        </div>
+      )
+    } else if (this.state.currentPage === 2) {
       return (
         <Container text>
           <Header as='h2'>Orthology</Header>
           <p>Orthology</p>
         </Container>
       )
-    } else if (this.state.currentPage === 2) {
+    } else if (this.state.currentPage === 3) {
       return (
         <Container text>
           <Header as='h2'>Methods</Header>
           <p>Methods</p>
         </Container>
       )
-    } else if (this.state.currentPage === 3) {
+    } else if (this.state.currentPage === 4) {
+      return (
+        <Container text>
+          <Header as='h2'>Community</Header>
+          <p>Community</p>
+        </Container>
+      )
+    } else if (this.state.currentPage === 5) {
       return (
         <Container text>
           <Header as='h2'>About</Header>
@@ -63,7 +88,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginBottom: 30}}>
         <div style={{ paddingTop: 15, paddingLeft: 20 }}>
           {/** Header **/}
           <div style={{ display: 'flex', height: 50 }}>
@@ -72,22 +97,19 @@ export default class App extends React.Component {
           </div>
         </div>
 
-        <Divider />
+        {/** Menu **/}
+        <Menu style={{ borderRadius: 0, paddingLeft: 125 }} color='blue' inverted>
+          <Menu.Item name='Upload' active={this.state.currentPage === 0} onClick={() => { this.setState({ currentPage: 0 }) }} />
+          <Menu.Item name='Orthology' active={this.state.currentPage === 2} onClick={() => { this.setState({ currentPage: 2 }) }} />
+          <Menu.Item name='Methods' active={this.state.currentPage === 3} onClick={() => { this.setState({ currentPage: 3 }) }} />
+          <Menu.Item name='Community' active={this.state.currentPage === 4} onClick={() => { this.setState({ currentPage: 4 }) }} />
+          <Menu.Item name='About' active={this.state.currentPage === 5} onClick={() => { this.setState({ currentPage: 5 }) }} />
+        </Menu>
 
-        <Container>
-          {/** Menu **/}
-          <Menu style={{float: 'left'}} pointing secondary vertical>
-            <Menu.Item name='Upload' active={this.state.currentPage === 0} onClick={() => { this.setState({ currentPage: 0 }) }} />
-            <Menu.Item name='Orthology' active={this.state.currentPage === 1} onClick={() => { this.setState({ currentPage: 1 }) }} />
-            <Menu.Item name='Methods' active={this.state.currentPage === 2} onClick={() => { this.setState({ currentPage: 2 }) }} />
-            <Menu.Item name='About' active={this.state.currentPage === 3} onClick={() => { this.setState({ currentPage: 3 }) }} />
-          </Menu>
-
+        <div>
           {/** Page **/}
-          <Container style={{float: 'left', width: '70%', paddingLeft: 30, paddingTop: 15}}>
-            {this.showPage()}
-          </Container>
-        </Container>
+          {this.showPage()}
+        </div>
 
       </div>
     )
