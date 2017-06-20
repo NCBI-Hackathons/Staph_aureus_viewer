@@ -8,3 +8,8 @@ The aim of this project is to develop a genome browser for Staphylococcus aureus
 2. Annotate the newly assembled genome and visualize with Jbrowse
 
 3. Predict orthologs and report recent gene duplications, reaarangements and other structural variation between Staphylococcus aureus strains
+
+
+Dependencies:
+
+pyfasta (https://pypi.python.org/pypi/pyfasta/)
