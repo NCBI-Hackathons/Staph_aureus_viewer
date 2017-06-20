@@ -19,6 +19,10 @@ BLAST+ (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
 
 ## Find the best reference genome for alignment
 
+Obtain 162 near-complete whole-genome sequences from NCBI
+
+`wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/717/725/`
+
 Run the best_reference.sh script
 
 `best_reference.sh`
