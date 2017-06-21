@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Dropzone from 'react-dropzone'
+import request from 'request'
+import Iframe from 'react-iframe'
 import Orthology from './orthology'
-import { Dropdown, Embed, Segment, Input, Container, Divider, Header, Button, Image, Menu } from 'semantic-ui-react'
-const sendmail = require('sendmail')()
+import { Form, TextArea, Dropdown, Embed, Segment, Input, Container, Divider, Header, Button, Image, Menu } from 'semantic-ui-react'
 
 export default class App extends React.Component {
   constructor() {
@@ -12,12 +13,14 @@ export default class App extends React.Component {
       currentPage: 0,
       file: '',
       email: '',
+      comment: '',
       param: window.location.href.split('#')[1],
       dropText: 'Drop your FASTA file here or click here to browse file.',
       jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2FCP014407.1&tracklist=0'
     }
     this.onDrop = this.onDrop.bind(this)
     this.onContinue = this.onContinue.bind(this)
+    this.onSend = this.onSend.bind(this)
   }
 
   componentDidMount() {
@@ -31,15 +34,7 @@ export default class App extends React.Component {
   }
 
   onSend() {
-    sendmail({
-      from: 'zhouanbo@gmail.com',
-      to: 'zhouanbo@gmail.com',
-      subject: 'test sendmail',
-      html: 'Mail of test sendmail ',
-    }, function (err, reply) {
-      console.log(err && err.stack)
-      console.dir(reply)
-    })
+    request.get('http://localhost:3000/mail?comment=' + this.state.comment)
   }
 
   onContinue() {
@@ -98,8 +93,12 @@ export default class App extends React.Component {
         <Container style={{ paddingTop: 10 }} >
           <Segment>
             <p>Choose a Staph strain to display:</p>
-            <Dropdown onChange={(event, data) => { this.setState({ jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2F' + data.value 
-              + '&tracklist=0' }) }} placeholder='select strain' selection options={[
+            <Dropdown onChange={(event, data) => {
+              this.setState({
+                jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2F' + data.value
+                + '&tracklist=0'
+              })
+            }} placeholder='select strain' selection options={[
               { key: "CP014407.1", value: "CP014407.1", text: "CP014407.1" },
               { key: "CP007499.1", value: "CP007499.1", text: "CP007499.1" },
               { key: "CP010295.1", value: "CP010295.1", text: "CP010295.1" },
@@ -186,9 +185,13 @@ export default class App extends React.Component {
       )
     } else if (this.state.currentPage === 5) {
       return (
-        <Container style={{ paddingTop: 10 }} text>
+        <Container style={{ paddingTop: 10 }}>
           <Header as='h2'>Community</Header>
-          <Button onClick={this.onSend}>Send</Button>
+          <Iframe 
+            position="absolute"
+            width="80%"
+            height="100%" 
+            url='disqus.html' />
         </Container>
       )
     } else if (this.state.currentPage === 6) {
