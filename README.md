@@ -55,9 +55,17 @@ For 50 *S. aureus* genomes we extracted the protein-coding sequences (CDS) from 
 
 ### JBrowse visualization of *Staphylococcus aureus* genome
 
-Our welcome page of the brower has options to load the de novo genome of your interest to find the best reference genome for alignment
+Our welcome page of the brower has options to load the de novo genome of your interest to find the best reference genome for alignment, visualize gene annotations using JBrowse and view orthlog predictions in a table format embedded within the StaphBrowse genome browser.
+
+## Example screenshots for StaphBrowse
+
+1. User page for loading the genome
 
 ![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/Annotate.png)
+
+2. Based on the best alignment for a reference, users can choose a genome for visualization of gene models
+
+![My image] (
 
 
 
