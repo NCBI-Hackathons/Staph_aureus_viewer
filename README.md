@@ -16,7 +16,7 @@ MAUVE [link](http://darlinglab.org/mauve/snapshots/2015/2015-02-13/linux-x64/mau
 
 GLIMMER [link](https://ccb.jhu.edu/software/glimmer/)
 
-JBrowse [link](
+JBrowse [link](https://jbrowse.org)
 
 ## StaphBrowse workflow
 
@@ -55,7 +55,9 @@ For 50 *S. aureus* genomes we extracted the protein-coding sequences (CDS) from 
 
 ### JBrowse visualization of *Staphylococcus aureus* genome
 
-![My image](
+Our welcome page of the brower has options to load the de novo genome of your interest to find the best reference genome for alignment
+
+![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/Annotate.png)
 
 
 
