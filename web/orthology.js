@@ -9,75 +9,103 @@ export default class Orthology extends React.Component {
     super()
     this.state = {
       data: '',
+      fdata: '',
+      start: 0,
+      search: '',
+      end: 150,
+      pages: '',
+      currentPage: 1,
     }
 
   }
 
   componentDidMount() {
-    Papa.parse(new File([blob],'orth_table.csv'), {
+    Papa.parse("http://" + window.location.host + '/orth_table.csv', {
+      download: true,
       complete: (results) => {
-        this.setState({ data: results })
+        this.setState({ fdata: results.data.slice(1), data: results.data, pages: Math.floor(results.data.length / 150) + 1 })
       }
     })
   }
 
   render() {
-    console.log(this.state.data)
-    if (this.state.data) {
+
+    if (this.state.fdata && this.state.pages) {
       return (
-        <Table celled>
+        <Table size='small' striped celled>
+
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Header</Table.HeaderCell>
-              <Table.HeaderCell>Header</Table.HeaderCell>
-              <Table.HeaderCell>Header</Table.HeaderCell>
+              <Table.HeaderCell colSpan='60'>
+                <Input placeholder='Search' value={this.state.search} style={{ marginRight: 15 }} onChange={(e) => {
+                  this.setState({ search: e.target.value }, () => {
+                    let fdata = this.state.data.slice(1).filter((row) => {
+                      let pass = false
+                      row.map((col) => {
+                        if (col.includes(this.state.search)) pass = true
+                      })
+                      return pass
+                    })
+                    this.setState({
+                      pages: Math.floor(fdata.length / 150) + 1,
+                      fdata
+                    })
+                  })
+                }} />
+                <Menu pagination>
+                  <Menu.Item onClick={() => { if (this.state.start >= 150) this.setState({ start: this.state.start - 150, end: this.state.end - 150 }) }} as='a' icon>
+                    <Icon name='left chevron' />
+                  </Menu.Item>
+                  {[...Array(this.state.pages)].map((el, id3) => {
+                    return <Menu.Item active={this.state.currentPage === (id3 + 1)} onClick={() => { this.setState({ currentPage: id3 + 1, start: id3 * 150, end: (id3 + 1) * 150 }) }} key={id3} as='a'>{id3 + 1}</Menu.Item>
+                  })
+                  }
+                  <Menu.Item onClick={() => { this.setState({ start: this.state.start + 150, end: this.state.end + 150 }) }} as='a' icon>
+                    <Icon name='right chevron' />
+                  </Menu.Item>
+                </Menu>
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Header>
+            <Table.Row>
+              {this.state.data[0].map((col, id0) => {
+                return (
+                  <Table.HeaderCell key={id0}>{col}</Table.HeaderCell>
+                )
+              })}
             </Table.Row>
           </Table.Header>
 
 
           <Table.Body>
             {
-              this.state.data.map((row, id) => {
-                return (
-                  <Table.Row key={id}>
-                    <Table.Cell>{row[0]}</Table.Cell>
-                    <Table.Cell>{row[1]}</Table.Cell>
-                    <Table.Cell>{row[2]}</Table.Cell>
-                  </Table.Row>
-                )
+              this.state.fdata.map((row, id1) => {
+                if (id1 >= this.state.start && id1 < this.state.end)
+                  return (
+                    <Table.Row key={id1}>
+                      {row.map((col, id2) => {
+                        return <Table.Cell key={id2}>{col}</Table.Cell>
+                      })}
+                    </Table.Row>
+                  )
               })
             }
-            <Table.Row>
-              <Table.Cell>
-                First
-              </Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-            </Table.Row>
           </Table.Body>
 
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan='3'>
-                <Menu floated='right' pagination>
-                  <Menu.Item as='a' icon>
+              <Table.HeaderCell colSpan='60'>
+                <Menu pagination>
+                  <Menu.Item onClick={() => { if (this.state.start >= 150) this.setState({ start: this.state.start - 150, end: this.state.end - 150 }) }} as='a' icon>
                     <Icon name='left chevron' />
                   </Menu.Item>
-                  <Menu.Item as='a'>1</Menu.Item>
-                  <Menu.Item as='a'>2</Menu.Item>
-                  <Menu.Item as='a'>3</Menu.Item>
-                  <Menu.Item as='a'>4</Menu.Item>
-                  <Menu.Item as='a' icon>
+                  {[...Array(this.state.pages)].map((el, id3) => {
+                    return <Menu.Item active={this.state.currentPage === (id3 + 1)} onClick={() => { this.setState({ currentPage: id3 + 1, start: id3 * 150, end: (id3 + 1) * 150 }) }} key={id3} as='a'>{id3 + 1}</Menu.Item>
+                  })
+                  }
+                  <Menu.Item onClick={() => { this.setState({ start: this.state.start + 150, end: this.state.end + 150 }) }} as='a' icon>
                     <Icon name='right chevron' />
                   </Menu.Item>
                 </Menu>
