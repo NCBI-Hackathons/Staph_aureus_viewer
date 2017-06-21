@@ -45,7 +45,7 @@ A pairwise alignment between the query genome and the closest Reference genome i
 
 `staph_pipeline.sh`
 
-Output for best alignment 
+Output for best alignment can be seen from command-line, but this is implemented as part of our user-friendly browser so unless users are interested in developing, this information is not shown in StaphBrowse web browser.  
 
 ![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/best_reference.png)
 
