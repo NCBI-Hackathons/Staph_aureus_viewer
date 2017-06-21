@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Dropzone from 'react-dropzone'
 import Orthology from './orthology'
 import { Dropdown, Embed, Segment, Input, Container, Divider, Header, Button, Image, Menu } from 'semantic-ui-react'
+const sendmail = require('sendmail')()
 
 export default class App extends React.Component {
   constructor() {
@@ -13,7 +14,7 @@ export default class App extends React.Component {
       email: '',
       param: window.location.href.split('#')[1],
       dropText: 'Drop your FASTA file here or click here to browse file.',
-      jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2Fsample&loc=CP003193.1%3A6486..6987&tracks=DNA%2Cgff&highlight='
+      jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2FCP014407.1&tracklist=0'
     }
     this.onDrop = this.onDrop.bind(this)
     this.onContinue = this.onContinue.bind(this)
@@ -27,6 +28,18 @@ export default class App extends React.Component {
 
   onDrop(files) {
     this.setState({ file: files[0], dropText: 'File selected: ' + files[0].name.substring(0, 20) + ((files[0].name.length > 10) ? '...' : '') })
+  }
+
+  onSend() {
+    sendmail({
+      from: 'zhouanbo@gmail.com',
+      to: 'zhouanbo@gmail.com',
+      subject: 'test sendmail',
+      html: 'Mail of test sendmail ',
+    }, function (err, reply) {
+      console.log(err && err.stack)
+      console.dir(reply)
+    })
   }
 
   onContinue() {
@@ -85,9 +98,77 @@ export default class App extends React.Component {
         <Container style={{ paddingTop: 10 }} >
           <Segment>
             <p>Choose a Staph strain to display:</p>
-            <Dropdown onChange={(event) => { this.setState({ jbrowseUrl: event.target.value }) }} placeholder='select strains' selection options={[{ key: 'strain1', value: 'strain1', text: 'Strain1' }, { key: 'strain2', value: 'strain2', text: 'Strain2' }, { key: 'strain3', value: 'strain3', text: 'Strain3' }]} />
+            <Dropdown onChange={(event, data) => { this.setState({ jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2F' + data.value 
+              + '&tracklist=0' }) }} placeholder='select strain' selection options={[
+              { key: "CP014407.1", value: "CP014407.1", text: "CP014407.1" },
+              { key: "CP007499.1", value: "CP007499.1", text: "CP007499.1" },
+              { key: "CP010295.1", value: "CP010295.1", text: "CP010295.1" },
+              { key: "CP015646.1", value: "CP015646.1", text: "CP015646.1" },
+              { key: "CP013619.1", value: "CP013619.1", text: "CP013619.1" },
+              { key: "CP012979.1", value: "CP012979.1", text: "CP012979.1" },
+              { key: "CP010998.1", value: "CP010998.1", text: "CP010998.1" },
+              { key: "CP014438.1", value: "CP014438.1", text: "CP014438.1" },
+              { key: "CP013959.1", value: "CP013959.1", text: "CP013959.1" },
+              { key: "CP015173.1", value: "CP015173.1", text: "CP015173.1" },
+              { key: "CP014402.1", value: "CP014402.1", text: "CP014402.1" },
+              { key: "CP011685.1", value: "CP011685.1", text: "CP011685.1" },
+              { key: "CP014432.1", value: "CP014432.1", text: "CP014432.1" },
+              { key: "CP007676.1", value: "CP007676.1", text: "CP007676.1" },
+              { key: "CP014435.1", value: "CP014435.1", text: "CP014435.1" },
+              { key: "CP010296.1", value: "CP010296.1", text: "CP010296.1" },
+              { key: "CP012972.1", value: "CP012972.1", text: "CP012972.1" },
+              { key: "CP007539.1", value: "CP007539.1", text: "CP007539.1" },
+              { key: "CP013182.1", value: "CP013182.1", text: "CP013182.1" },
+              { key: "CP014409.1", value: "CP014409.1", text: "CP014409.1" },
+              { key: "CP014429.1", value: "CP014429.1", text: "CP014429.1" },
+              { key: "CP013955.1", value: "CP013955.1", text: "CP013955.1" },
+              { key: "CP014420.1", value: "CP014420.1", text: "CP014420.1" },
+              { key: "CP019563.1", value: "CP019563.1", text: "CP019563.1" },
+              { key: "CP010299.1", value: "CP010299.1", text: "CP010299.1" },
+              { key: "CP014415.1", value: "CP014415.1", text: "CP014415.1" },
+              { key: "CP007674.1", value: "CP007674.1", text: "CP007674.1" },
+              { key: "CP012593.1", value: "CP012593.1", text: "CP012593.1" },
+              { key: "AP017320.1", value: "AP017320.1", text: "AP017320.1" },
+              { key: "CP013616.1", value: "CP013616.1", text: "CP013616.1" },
+              { key: "CP012970.1", value: "CP012970.1", text: "CP012970.1" },
+              { key: "CP007447.1", value: "CP007447.1", text: "CP007447.1" },
+              { key: "CP014444.1", value: "CP014444.1", text: "CP014444.1" },
+              { key: "CP014064.1", value: "CP014064.1", text: "CP014064.1" },
+              { key: "CP009828.1", value: "CP009828.1", text: "CP009828.1" },
+              { key: "CP014423.1", value: "CP014423.1", text: "CP014423.1" },
+              { key: "CP012976.1", value: "CP012976.1", text: "CP012976.1" },
+              { key: "CP014441.1", value: "CP014441.1", text: "CP014441.1" },
+              { key: "CP012692.1", value: "CP012692.1", text: "CP012692.1" },
+              { key: "CP012974.1", value: "CP012974.1", text: "CP012974.1" },
+              { key: "BX571857.1", value: "BX571857.1", text: "BX571857.1" },
+              { key: "CP015645.1", value: "CP015645.1", text: "CP015645.1" },
+              { key: "CP019117.1", value: "CP019117.1", text: "CP019117.1" },
+              { key: "CP010298.1", value: "CP010298.1", text: "CP010298.1" },
+              { key: "CP014397.1", value: "CP014397.1", text: "CP014397.1" },
+              { key: "CP011528.1", value: "CP011528.1", text: "CP011528.1" },
+              { key: "CP007672.1", value: "CP007672.1", text: "CP007672.1" },
+              { key: "CP007670.1", value: "CP007670.1", text: "CP007670.1" },
+              { key: "CP010297.1", value: "CP010297.1", text: "CP010297.1" },
+              { key: "CP013137.1", value: "CP013137.1", text: "CP013137.1" },
+              { key: "CP010890.1", value: "CP010890.1", text: "CP010890.1" },
+              { key: "CP013953.1", value: "CP013953.1", text: "CP013953.1" },
+              { key: "CP019945.1", value: "CP019945.1", text: "CP019945.1" },
+              { key: "CP013957.1", value: "CP013957.1", text: "CP013957.1" },
+              { key: "CP013132.1", value: "CP013132.1", text: "CP013132.1" },
+              { key: "CP014791.1", value: "CP014791.1", text: "CP014791.1" },
+              { key: "CP007657.1", value: "CP007657.1", text: "CP007657.1" },
+              { key: "CP012978.1", value: "CP012978.1", text: "CP012978.1" },
+              { key: "CP007690.1", value: "CP007690.1", text: "CP007690.1" },
+              { key: "CP013621.1", value: "CP013621.1", text: "CP013621.1" },
+              { key: "CP011147.1", value: "CP011147.1", text: "CP011147.1" },
+              { key: "CP007454.1", value: "CP007454.1", text: "CP007454.1" },
+              { key: "CP014412.1", value: "CP014412.1", text: "CP014412.1" },
+              { key: "CP014392.1", value: "CP014392.1", text: "CP014392.1" },
+              { key: "AP014942.1", value: "AP014942.1", text: "AP014942.1" },
+              { key: "CP010300.1", value: "CP010300.1", text: "CP010300.1" },
+            ]} />
           </Segment>
-          <iframe style={{ border: 0, width: '100%', height: 600 }} src={this.state.jbrowseUrl}></iframe>
+          <iframe style={{ border: 0, width: '100%', height: 400 }} src={this.state.jbrowseUrl}></iframe>
         </Container>
       )
     } else if (this.state.currentPage === 3) {
@@ -107,14 +188,14 @@ export default class App extends React.Component {
       return (
         <Container style={{ paddingTop: 10 }} text>
           <Header as='h2'>Community</Header>
-          <p>Community</p>
+          <Button onClick={this.onSend}>Send</Button>
         </Container>
       )
     } else if (this.state.currentPage === 6) {
       return (
         <Container style={{ paddingTop: 10 }} text>
           <Header as='h2'>About</Header>
-          <Image style={{borderRadius: 5}} src='images/about.jpg' />
+          <Image style={{ borderRadius: 5 }} src='images/about.jpg' />
           <Segment>
             <p>Richard Copin, Ph.D.</p>
             <p><a href="mailto:richard.copin@nyumc.org">richard.copin@nyumc.org</a></p>
