@@ -180,17 +180,25 @@ export default class App extends React.Component {
       return (
         <Container style={{ paddingTop: 10 }} text>
           <Header as='h2'>Methods</Header>
-          <p>Methods</p>
+          <p><strong>Genome sequence data</strong></p>
+          <p><em>Staphyococcus aureus</em> genome sequence data was obtained from NCBI genomes portal, using the search term &ldquo;staphylococcus aureus[orgn] &ldquo;. NBCI lists 7968 sequences associated with <em>Staphyococcus aureus, </em>but only 162 sequences are complete whole-genome sequences. We downloaded 162 complete whole-genome sequences of <em>S. aureus</em> from NCBI.</p>
+          <p><strong>Determining the best reference genome</strong></p>
+          <p>As a proof-of-principle, we sampled 10 random genomes from the 162 whole-genome set and subdivided the genomes into 1kb chunks using pyfasta tool (<a href="https://pypi.python.org/pypi/pyfasta/">https://pypi.python.org/pypi/pyfasta/</a>). 1kb sequences were then compared with BLAST against a database of the remaining 152 genomes using a custom shell script (<a href="https://github.com/NCBI-Hackathons/Staph_aureus_viewer">https://github.com/NCBI-Hackathons/Staph_aureus_viewer</a>). The most frequent best-hit to a Reference was identified for each query genome.</p>
+          <p>A pairwise alignment between the query genome and the closest Reference genome is then constructed with MAUVE Contig Mover and exported as a JPEG image. A table of gaps in the alignment is also provided as a CSV file to aid in the identification of strain-specific insertions of mobile elements, which often carry drug resistance and virulence genes.</p>
+          <p><strong>Ortholog identification</strong></p>
+          <p>For 50 <em>S. aureus</em> strains with complete RefSeq whole-genome sequences, we extracted the protein-coding sequences (CDS) from the gene feature format (gff) file. The CDS fasta files were then converted into individual BLAST databases for performing reciprocal best BLAST search. We required a minimum alignment length of 50 nucleotides with a e-value &lt; 0.001 for a best reciprocal BLAST hit. An ortholog table was constructed, showing the orthology relationship for each gene (strains where the gene is present).</p>
+          <p><strong>Browser environment</strong></p>
+          <p>The testing version of the web browser is hosted at (http://zhouanbo.com/Staph_aureus_viewer/web/). The dynamic browser was created in the Java environment and implements JBrowse for visualization of <em>S. aureus</em> genomes.</p>
         </Container>
       )
     } else if (this.state.currentPage === 5) {
       return (
         <Container style={{ paddingTop: 10 }}>
           <Header as='h2'>Community</Header>
-          <Iframe 
+          <Iframe
             position="absolute"
             width="80%"
-            height="100%" 
+            height="100%"
             url='disqus.html' />
         </Container>
       )

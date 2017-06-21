@@ -14,14 +14,14 @@ export default class Orthology extends React.Component {
       search: '',
       end: 150,
       pages: '',
-      genome: 'GCA_000013465.1_ASM1346v1',
+      genome: 'GCA_000013465.1',
       currentPage: 1,
     }
 
   }
 
   componentDidMount() {
-    Papa.parse("http://" + window.location.host + '/data/GCA_000013465.1_ASM1346v1.txt', {
+    Papa.parse("http://" + window.location.host + '/data/GCA_000013465.1.txt', {
       download: true,
       complete: (results) => {
         this.setState({ fdata: results.data.slice(1), data: results.data, pages: Math.floor(results.data.length / 150) + 1 })

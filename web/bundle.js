@@ -216,7 +216,104 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             'p',
             null,
-            'Methods'
+            _react2.default.createElement(
+              'strong',
+              null,
+              'Genome sequence data'
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'em',
+              null,
+              'Staphyococcus aureus'
+            ),
+            ' genome sequence data was obtained from NCBI genomes portal, using the search term \u201Cstaphylococcus aureus[orgn] \u201C. NBCI lists 7968 sequences associated with ',
+            _react2.default.createElement(
+              'em',
+              null,
+              'Staphyococcus aureus, '
+            ),
+            'but only 162 sequences are complete whole-genome sequences. We downloaded 162 complete whole-genome sequences of ',
+            _react2.default.createElement(
+              'em',
+              null,
+              'S. aureus'
+            ),
+            ' from NCBI.'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'strong',
+              null,
+              'Determining the best reference genome'
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'As a proof-of-principle, we sampled 10 random genomes from the 162 whole-genome set and subdivided the genomes into 1kb chunks using pyfasta tool (',
+            _react2.default.createElement(
+              'a',
+              { href: 'https://pypi.python.org/pypi/pyfasta/' },
+              'https://pypi.python.org/pypi/pyfasta/'
+            ),
+            '). 1kb sequences were then compared with BLAST against a database of the remaining 152 genomes using a custom shell script (',
+            _react2.default.createElement(
+              'a',
+              { href: 'https://github.com/NCBI-Hackathons/Staph_aureus_viewer' },
+              'https://github.com/NCBI-Hackathons/Staph_aureus_viewer'
+            ),
+            '). The most frequent best-hit to a Reference was identified for each query genome.'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'A pairwise alignment between the query genome and the closest Reference genome is then constructed with MAUVE Contig Mover and exported as a JPEG image. A table of gaps in the alignment is also provided as a CSV file to aid in the identification of strain-specific insertions of mobile elements, which often carry drug resistance and virulence genes.'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'strong',
+              null,
+              'Ortholog identification'
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'For 50 ',
+            _react2.default.createElement(
+              'em',
+              null,
+              'S. aureus'
+            ),
+            ' strains with complete RefSeq whole-genome sequences, we extracted the protein-coding sequences (CDS) from the gene feature format (gff) file. The CDS fasta files were then converted into individual BLAST databases for performing reciprocal best BLAST search. We required a minimum alignment length of 50 nucleotides with a e-value < 0.001 for a best reciprocal BLAST hit. An ortholog table was constructed, showing the orthology relationship for each gene (strains where the gene is present).'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'strong',
+              null,
+              'Browser environment'
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'The testing version of the web browser is hosted at (http://zhouanbo.com/Staph_aureus_viewer/web/). The dynamic browser was created in the Java environment and implements JBrowse for visualization of ',
+            _react2.default.createElement(
+              'em',
+              null,
+              'S. aureus'
+            ),
+            ' genomes.'
           )
         );
       } else if (this.state.currentPage === 5) {
@@ -98284,7 +98381,7 @@ var Orthology = function (_React$Component) {
       search: '',
       end: 150,
       pages: '',
-      genome: 'GCA_000013465.1_ASM1346v1',
+      genome: 'GCA_000013465.1',
       currentPage: 1
     };
 
@@ -98296,7 +98393,7 @@ var Orthology = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      _papaparse2.default.parse("http://" + window.location.host + '/data/GCA_000013465.1_ASM1346v1.txt', {
+      _papaparse2.default.parse("http://" + window.location.host + '/data/GCA_000013465.1.txt', {
         download: true,
         complete: function complete(results) {
           _this2.setState({ fdata: results.data.slice(1), data: results.data, pages: Math.floor(results.data.length / 150) + 1 });
