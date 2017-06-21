@@ -12,11 +12,11 @@ The aim of this project is to develop a genome browser for Staphylococcus aureus
 
 ## Dependencies:computer:
 
-pyfasta (https://pypi.python.org/pypi/pyfasta/)
+pyfasta [link](https://pypi.python.org/pypi/pyfasta/)
 
-BLAST+ (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
+BLAST+ [link](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
 
-MAUVE (http://darlinglab.org/mauve/snapshots/2015/2015-02-13/linux-x64/mauve_linux_snapshot_2015-02-13.tar.gz)
+MAUVE [link](http://darlinglab.org/mauve/snapshots/2015/2015-02-13/linux-x64/mauve_linux_snapshot_2015-02-13.tar.gz)
 
 
 ## Find the best reference genome for alignment
