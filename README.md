@@ -1,5 +1,5 @@
 # StaphBrowse
-A NYGC Hackathon Project to Create a genome visualization tool for *Staphylococcus aureus*
+A NYGC Hackathon Project to create a genome visualization tool for *Staphylococcus aureus*
 
 *Staphylococcus aureus* is the most common cause of human bacterial infections, including the majority of hospital acquired infections. *S. aureus* has a highly variable genome, with differences between isolates that include substantial insertion/deletions of mobile elements. Disease surveillance research has led to the genome sequencing of many thousands of isolates. However, the annotation of these genome sequences does not provide researchers with a complete set of orthologs with informative names. Here, we present a computational pipeline to compare de novo sequence contigs to the set of complete RefSeq genomes for i) determining appropriate reference genome for whole-genome alignment, ii) annotation, ortholog prediction, and comparative genomics, and iii) front-end visualization of genome annotation using a versatile, user-friendly web-based genome browser. We demonstrate our pipeline using data from *S. aureus* as a paradigm, owing to its high sequence variability, and therefore less well-curated genomic sequences in public databases.
  
@@ -29,6 +29,7 @@ Obtain near-complete whole-genome sequences from NCBI
 
 `wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/717/725/`
 
+
 ### Determining the best reference genome for alignment 
  
 As a proof-of-principle, we sampled 10 random genomes from the whole-genome set and subdivided the genomes into 1kb chunks using pyfasta tool. 1kb sequences were then compared with BLAST against a database of the remaining genomes using a custom shell script. The most frequent best-hit to a Reference was identified for each query genome. 
@@ -44,7 +45,15 @@ Output for best alignment
 
 ![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/best_reference.png)
 
-### JBrowse visualization of Staphylococcus aureus genome
+### Ortholog identification
+
+For 50 *S. aureus* genomes we extracted the protein-coding sequences (CDS) from the gene feature format (gff) file. The CDS fasta files were then converted into individual BLAST databases for performing reciprocal best BLAST search. We required a minimum alignment length of 50 nucleotides with a e-value < 0.001 for a best reciprocal BLAST hit using the following R script.
+
+`ortholog_identification.R`
+
+### JBrowse visualization of *Staphylococcus aureus* genome
+
+![My image](
 
 
 
