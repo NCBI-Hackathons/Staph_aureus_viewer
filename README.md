@@ -65,7 +65,7 @@ Our welcome page of the brower has options to load the de novo genome of your in
 
 2. Based on the best alignment for a reference, users can choose a genome for visualization of gene models
 
-![My image] (https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/Gene_models.png)
+![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/Gene_models.png)
 
 
 
