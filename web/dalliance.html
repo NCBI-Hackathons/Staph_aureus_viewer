@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<script language="javascript" src="http://www.biodalliance.org/release-0.12/dalliance-compiled.js"></script>
+<script language="javascript">
+  new Browser({
+    chr:          '1',
+    viewStart:    100000,
+    viewEnd:      100000,
+
+    coordSystem: {
+        speciesName: 'Staph',
+        taxon: 1280,
+        auth: 'ncbi',
+        version: '1',
+      },
+
+    sources:     [{name:                 'Genome',
+                   twoBitURI:            'http://www.biodalliance.org/datasets/hg19.2bit',
+                   tier_type:            'sequence'},
+                  ],
+
+    disablePoweredBy: true,
+    noTitle: true,
+    noPersist: true,
+  });
+</script>
+
+<div id="svgHolder" style='margin-left: 5%; margin-right: 5%; border-width: 1px; border-style: solid; border-color: #ccc; border-radius: 4px; padding: 10px'></div>

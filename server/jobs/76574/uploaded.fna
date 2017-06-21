@@ -1,0 +1,58 @@
+1-1:
+  name: fast5 to fastq
+  in: $fast5
+  run: poretools fastq ~fast5in > ~fast5out
+  ~fast5in: {}
+  ~fast5out:
+    mods: $FILENAME_NOEXT.fastq
+  out: ~fast5out
+
+
+2-1:
+  name: merge fastq
+  in: $1-1.out
+  run: cat ~mergein > ~mergeout
+  ~mergein: 
+    line: -:0
+  ~mergeout:
+    mods: merged.fastq
+  out: ~mergeout
+
+
+3-1:
+  name: align
+  in: $2-1.out
+  run: /lab01/Tools/graphmap/bin/Linux-x64/graphmap align -r /lab01/DataSets/bundle_GATK/hg19/ucsc.hg19.fasta -d ~alignin -o ~alignout
+  ~alignin: {}
+  ~alignout: 
+    mods: merged.sam
+  out: ~alignout
+
+
+4-1:
+  name: sort
+  in: $3-1.out
+  run: samtools sort -o ~sortin > ~sortout
+  ~sortin: {}
+  ~sortout: 
+    mods: merged.sort.sam
+  out: ~sortout
+
+5-1: 
+  name: sam to bam
+  in: $4-1.out
+  run: samtools view -b ~bamin > ~bamout
+  ~bamin: {}
+  ~bamout: 
+    mods: $FILENAME_NOEXT.bam
+  out: ~bamout
+
+6-1:
+  name: call
+  in: $5-1.out
+  run: /lab01/Tools/Sniffles/bin/sniffles-core-1.0.3/sniffles -m ~callin -v ~callout
+  ~callin: {}
+  ~callout: 
+    mods: $FILENAME_NOEXT.vcf
+    
+
