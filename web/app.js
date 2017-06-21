@@ -85,7 +85,7 @@ export default class App extends React.Component {
       return (
         <Container text>
           <Header as='h2'>Submitted</Header>
-          <p>You file is submitted and we'll send you an email when the processing is completed.</p>
+          <p>You file is submitted and we'll send you an email when the processing is completed. You can close this page now.</p>
         </Container>
       )
     } else if (this.state.currentPage === 2) {

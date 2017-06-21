@@ -175,7 +175,7 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             'p',
             null,
-            'You file is submitted and we\'ll send you an email when the processing is completed.'
+            'You file is submitted and we\'ll send you an email when the processing is completed. You can close this page now.'
           )
         );
       } else if (this.state.currentPage === 2) {
@@ -98284,6 +98284,7 @@ var Orthology = function (_React$Component) {
       search: '',
       end: 150,
       pages: '',
+      genome: 'GCA_000013465.1_ASM1346v1',
       currentPage: 1
     };
 
@@ -98295,7 +98296,7 @@ var Orthology = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      _papaparse2.default.parse("http://" + window.location.host + '/orth_table.csv', {
+      _papaparse2.default.parse("http://" + window.location.host + '/data/GCA_000013465.1_ASM1346v1.txt', {
         download: true,
         complete: function complete(results) {
           _this2.setState({ fdata: results.data.slice(1), data: results.data, pages: Math.floor(results.data.length / 150) + 1 });
@@ -98306,6 +98307,22 @@ var Orthology = function (_React$Component) {
     key: 'render',
     value: function render() {
       var _this3 = this;
+
+      var search = function search(value) {
+        _this3.setState({ search: value }, function () {
+          var fdata = _this3.state.data.slice(1).filter(function (row) {
+            var pass = false;
+            row.map(function (col, cid) {
+              if (cid <= 7 && col.includes(_this3.state.search)) pass = true;
+            });
+            return pass;
+          });
+          _this3.setState({
+            pages: Math.floor(fdata.length / 150) + 1,
+            fdata: fdata
+          });
+        });
+      };
 
       if (this.state.fdata && this.state.pages) {
         return _react2.default.createElement(
@@ -98319,21 +98336,14 @@ var Orthology = function (_React$Component) {
               null,
               _react2.default.createElement(
                 _semanticUiReact.Table.HeaderCell,
+                { colSpan: '4' },
+                'Showing: ' + this.state.genome
+              ),
+              _react2.default.createElement(
+                _semanticUiReact.Table.HeaderCell,
                 { colSpan: '60' },
                 _react2.default.createElement(_semanticUiReact.Input, { placeholder: 'Search', value: this.state.search, style: { marginRight: 15 }, onChange: function onChange(e) {
-                    _this3.setState({ search: e.target.value }, function () {
-                      var fdata = _this3.state.data.slice(1).filter(function (row) {
-                        var pass = false;
-                        row.map(function (col) {
-                          if (col.includes(_this3.state.search)) pass = true;
-                        });
-                        return pass;
-                      });
-                      _this3.setState({
-                        pages: Math.floor(fdata.length / 150) + 1,
-                        fdata: fdata
-                      });
-                    });
+                    return search(e.target.value);
                   } }),
                 _react2.default.createElement(
                   _semanticUiReact.Menu,
@@ -98388,11 +98398,31 @@ var Orthology = function (_React$Component) {
                 _semanticUiReact.Table.Row,
                 { key: id1 },
                 row.map(function (col, id2) {
-                  return _react2.default.createElement(
-                    _semanticUiReact.Table.Cell,
-                    { key: id2 },
-                    col
-                  );
+                  var re = '';
+                  if (id2 <= 7) {
+                    re = _react2.default.createElement(
+                      _semanticUiReact.Table.Cell,
+                      { key: id2 },
+                      col
+                    );
+                  } else {
+                    re = _react2.default.createElement(
+                      _semanticUiReact.Table.Cell,
+                      { style: { padding: 10 }, selectable: true, onClick: function onClick() {
+
+                          _papaparse2.default.parse("http://" + window.location.host + '/data/' + _this3.state.data[0][id2] + '.txt', {
+                            download: true,
+                            complete: function complete(results) {
+                              _this3.setState({ genome: _this3.state.data[0][id2], fdata: results.data.slice(1), data: results.data, pages: Math.floor(results.data.length / 150) + 1 }, function () {
+                                search(col);
+                              });
+                            }
+                          });
+                        }, key: id2 },
+                      col
+                    );
+                  }
+                  return re;
                 })
               );
             })

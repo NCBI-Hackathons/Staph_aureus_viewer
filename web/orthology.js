@@ -14,13 +14,14 @@ export default class Orthology extends React.Component {
       search: '',
       end: 150,
       pages: '',
+      genome: 'GCA_000013465.1_ASM1346v1',
       currentPage: 1,
     }
 
   }
 
   componentDidMount() {
-    Papa.parse("http://" + window.location.host + '/orth_table.csv', {
+    Papa.parse("http://" + window.location.host + '/data/GCA_000013465.1_ASM1346v1.txt', {
       download: true,
       complete: (results) => {
         this.setState({ fdata: results.data.slice(1), data: results.data, pages: Math.floor(results.data.length / 150) + 1 })
@@ -30,28 +31,31 @@ export default class Orthology extends React.Component {
 
   render() {
 
+    const search = (value) => {
+      this.setState({ search: value }, () => {
+        let fdata = this.state.data.slice(1).filter((row) => {
+          let pass = false
+          row.map((col, cid) => {
+            if (cid <= 7 && col.includes(this.state.search)) pass = true
+          })
+          return pass
+        })
+        this.setState({
+          pages: Math.floor(fdata.length / 150) + 1,
+          fdata
+        })
+      })
+    }
+
     if (this.state.fdata && this.state.pages) {
       return (
         <Table size='small' striped celled>
 
           <Table.Header>
             <Table.Row>
+              <Table.HeaderCell colSpan='4'>{'Showing: '+this.state.genome}</Table.HeaderCell>
               <Table.HeaderCell colSpan='60'>
-                <Input placeholder='Search' value={this.state.search} style={{ marginRight: 15 }} onChange={(e) => {
-                  this.setState({ search: e.target.value }, () => {
-                    let fdata = this.state.data.slice(1).filter((row) => {
-                      let pass = false
-                      row.map((col) => {
-                        if (col.includes(this.state.search)) pass = true
-                      })
-                      return pass
-                    })
-                    this.setState({
-                      pages: Math.floor(fdata.length / 150) + 1,
-                      fdata
-                    })
-                  })
-                }} />
+                <Input placeholder='Search' value={this.state.search} style={{ marginRight: 15 }} onChange={(e) => search(e.target.value)} />
                 <Menu pagination>
                   <Menu.Item onClick={() => { if (this.state.start >= 150) this.setState({ start: this.state.start - 150, end: this.state.end - 150 }) }} as='a' icon>
                     <Icon name='left chevron' />
@@ -86,7 +90,25 @@ export default class Orthology extends React.Component {
                   return (
                     <Table.Row key={id1}>
                       {row.map((col, id2) => {
-                        return <Table.Cell key={id2}>{col}</Table.Cell>
+                        let re = ''
+                        if (id2 <= 7) {
+                          re = <Table.Cell key={id2}>{col}</Table.Cell>
+                        } else {
+                          re = <Table.Cell style={{ padding: 10 }} selectable onClick={() => {
+
+                            Papa.parse("http://" + window.location.host + '/data/' + this.state.data[0][id2] + '.txt', {
+                              download: true,
+                              complete: (results) => {
+                                this.setState({ genome: this.state.data[0][id2], fdata: results.data.slice(1), data: results.data, pages: Math.floor(results.data.length / 150) + 1 }, () => {
+                                  search(col)
+                                })
+                              }
+                            })
+
+
+                          }} key={id2}>{col}</Table.Cell>
+                        }
+                        return re
                       })}
                     </Table.Row>
                   )

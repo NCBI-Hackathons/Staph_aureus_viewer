@@ -8,13 +8,6 @@ app.use(express.static('../web'));
 app.use(express.static('jobs'));
 app.use(busboy({ immediate: true }));
 
-app.get('/run', function (req, res) {
-  var send = exec('echo "'+req.query.comment+'" | mail -s "StaphBrowse - Community Message" stuart.brown@nyumc.org');
-  send.on('close', function (code) {
-    console.log(`child process exited with code ${code}`);
-  });
-})
-
 app.post('/upload', function (req, res) {
   var jobID = Math.floor(Math.random() * 100000)
   var filepath = ''
@@ -31,6 +24,11 @@ app.post('/upload', function (req, res) {
   });
   req.busboy.on('finish', function () {
     res.send('accepted');
+    var run = exec();
+    var send = exec('echo "' + req.query.comment + '" | mail -s "StaphBrowse - Community Message" stuart.brown@nyumc.org');
+    send.on('close', function (code) {
+      console.log(`child process exited with code ${code}`);
+    });
   });
 
 });
