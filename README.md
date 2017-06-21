@@ -31,6 +31,10 @@ Output for best alignment
 
 ![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/best_reference.png)
 
+JBrowse visualization of Staphylococcus aureus genome
+
+
+
 
 
 
