@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import request from 'request'
 import Dropzone from 'react-dropzone'
 import Orthology from './orthology'
 import { Dropdown, Embed, Segment, Input, Container, Divider, Header, Button, Image, Menu } from 'semantic-ui-react'
@@ -12,6 +11,7 @@ export default class App extends React.Component {
       currentPage: 0,
       file: '',
       email: '',
+      param: window.location.href.split('#')[1],
       dropText: 'Drop your FASTA file here or click here to browse file.',
       jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2Fsample&loc=CP003193.1%3A6486..6987&tracks=DNA%2Cgff&highlight='
     }
@@ -19,41 +19,37 @@ export default class App extends React.Component {
     this.onContinue = this.onContinue.bind(this)
   }
 
+  componentDidMount() {
+    if (this.state.param) {
+      this.setState({ currentPage: 7 })
+    }
+  }
+
   onDrop(files) {
     this.setState({ file: files[0], dropText: 'File selected: ' + files[0].name.substring(0, 20) + ((files[0].name.length > 10) ? '...' : '') })
   }
 
   onContinue() {
-    let formData = {
-      file: this.state.file,
-      email: this.state.email
-    }
-    request({
-      method: 'POST',
-      uri: 'http://localhost:3000/upload',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      multipart: {
-        chunked: false,
-        data: [
-          {
-            'Content-Disposition': `form-data; name="file"; filename=${this.state.file.name}`,
-            body: this.state.file
-          },
-          {
-            'Content-Disposition': 'form-data; name="email"',
-            body: this.state.email
-          },
-        ]
-      },
-    }, (err, res, body) => {
-      if (err) {
-        return console.error('upload failed:', err);
+    let fd = new FormData()
+    fd.append("file", this.state.file)
+    fd.append("email", this.state.email)
+    let xhr = new XMLHttpRequest()
+    xhr.open('POST', 'http://localhost:3000/upload', true)
+
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) {
+        let percentComplete = (e.loaded / e.total) * 100
+        console.log(percentComplete + '% uploaded')
       }
-      console.log('Upload successful!  Server responded with:', body);
-      this.setState({ currentPage: 1 })
-    })
+    }
+    xhr.onload = () => {
+      if (xhr.status == 200) {
+        console.log('Server got:', xhr.responseText)
+        this.setState({ currentPage: 1 })
+      }
+    }
+    xhr.send(fd)
+
   }
 
   showPage() {
@@ -80,6 +76,7 @@ export default class App extends React.Component {
     } else if (this.state.currentPage === 1) {
       return (
         <Container text>
+          <Header as='h2'>Submitted</Header>
           <p>You file is submitted and we'll send you an email when the processing is completed.</p>
         </Container>
       )
@@ -95,29 +92,74 @@ export default class App extends React.Component {
       )
     } else if (this.state.currentPage === 3) {
       return (
-        <Container style={{ paddingTop: 15, width: '90%', overflow: 'scroll' }} >
+        <Container style={{ paddingTop: 10, width: '90%', overflow: 'scroll' }} >
           <Orthology />
         </Container>
       )
     } else if (this.state.currentPage === 4) {
       return (
-        <Container text>
+        <Container style={{ paddingTop: 10 }} text>
           <Header as='h2'>Methods</Header>
           <p>Methods</p>
         </Container>
       )
     } else if (this.state.currentPage === 5) {
       return (
-        <Container text>
+        <Container style={{ paddingTop: 10 }} text>
           <Header as='h2'>Community</Header>
           <p>Community</p>
         </Container>
       )
     } else if (this.state.currentPage === 6) {
       return (
-        <Container text>
+        <Container style={{ paddingTop: 10 }} text>
           <Header as='h2'>About</Header>
-          <p>About</p>
+          <Image style={{borderRadius: 5}} src='images/about.jpg' />
+          <Segment>
+            <p>Richard Copin, Ph.D.</p>
+            <p><a href="mailto:richard.copin@nyumc.org">richard.copin@nyumc.org</a></p>
+            <p>New York University School of Medicine</p>
+            <p>430 east 29th street,</p>
+            <p>Alexandrai West, 3rd floor,</p>
+            <p>New York, NY, 10016</p>
+          </Segment>
+          <Segment>
+            <p>Anbo Zhou</p>
+            <p><a href="mailto:zhouanbo@gmail.com">zhouanbo@gmail.com</a></p>
+            <p>Genetics Department</p>
+            <p>Rutgers University</p>
+            <p>57 US Highway 1, New Brunswick, NJ, 08901</p>
+          </Segment>
+          <Segment>
+            <p>Jeffrey Vedanayagam</p>
+            <p><a href="mailto:vedanayj@mskcc.org">vedanayj@mskcc.org</a></p>
+            <p>Developmental Biology Program</p>
+            <p>Sloan Kettering Institute</p>
+            <p>430 E 67th Street, New York 10065</p>
+          </Segment>
+          <Segment>
+            <p>Dmitry Brogun</p>
+            <p>City University of New York</p>
+          </Segment>
+          <Segment>
+            <p>Stuart Brown</p>
+            <p><a href="mailto:stuart.brown@nyumc.org">stuart.brown@nyumc.org</a></p>
+            <p>Sequencing Informatics Group</p>
+            <p>Center for Health Informatics and Bioinformatics</p>
+            <p>New York University</p>
+            <p>227 E 30th Street, New York 10016</p>
+          </Segment>
+          <Segment>
+            <p>Ben Busby</p>
+            <p>National Center for Biotechnology Information</p>
+          </Segment>
+        </Container>
+      )
+    } else if (this.state.currentPage === 7) {
+      return (
+        <Container style={{ paddingTop: 10 }} text>
+          <Header as='h2'>Result</Header>
+          <Image src={'jobs/' + this.state.param + '/result.png'} />
         </Container>
       )
     }
