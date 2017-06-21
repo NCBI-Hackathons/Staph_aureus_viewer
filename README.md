@@ -18,9 +18,9 @@ BLAST+ [link](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_T
 
 MAUVE [link](http://darlinglab.org/mauve/snapshots/2015/2015-02-13/linux-x64/mauve_linux_snapshot_2015-02-13.tar.gz)
 
-## StaphBrowser workflow
+## StaphBrowse workflow
 
-![My image]
+![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/StaphBrowse_workflow.png)
 
 
 ## Find the best reference genome for alignment
