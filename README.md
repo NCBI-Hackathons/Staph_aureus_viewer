@@ -14,7 +14,7 @@ The aim of this project is to develop a genome browser for Staphylococcus aureus
 
 pyfasta [link](https://pypi.python.org/pypi/pyfasta/)
 
-BLAST+ [link](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
+BLAST+ [link](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 
 MAUVE [link](http://darlinglab.org/mauve/snapshots/2015/2015-02-13/linux-x64/mauve_linux_snapshot_2015-02-13.tar.gz)
 
