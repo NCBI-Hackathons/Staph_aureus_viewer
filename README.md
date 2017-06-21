@@ -19,11 +19,22 @@ GLIMMER [link](https://ccb.jhu.edu/software/glimmer/)
 ![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/StaphBrowse_workflow.png)
 
 
-## Find the best reference genome for alignment
+## Workflow methods
 
-Obtain 162 near-complete whole-genome sequences from NCBI
+### Genome sequence data
+ 
+*Staphyococcus aureus* genome sequence data was obtained from NCBI genomes portal, using the search term “staphylococcus aureus[orgn] “. NBCI lists 7968 sequences associated with *S. aureus*, but only 66 sequences are complete whole-genome sequences. We downloaded 66 complete whole-genome sequences of *S. aureus* from NCBI. 
+
+Obtain near-complete whole-genome sequences from NCBI
 
 `wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/717/725/`
+
+### Determining the best reference genome for alignment 
+ 
+As a proof-of-principle, we sampled 10 random genomes from the whole-genome set and subdivided the genomes into 1kb chunks using pyfasta tool. 1kb sequences were then compared with BLAST against a database of the remaining genomes using a custom shell script. The most frequent best-hit to a Reference was identified for each query genome. 
+ 
+A pairwise alignment between the query genome and the closest Reference genome is then  constructed with MAUVE Contig Mover and exported as a JPEG image. A table of gaps in the alignment is also provided as a CSV file to aid in the identification of strain-specific insertions of mobile elements, which often carry drug resistance and virulence genes. 
+
 
 ### Run the best_reference.sh script
 
