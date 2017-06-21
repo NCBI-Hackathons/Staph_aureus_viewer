@@ -67,7 +67,9 @@ Our welcome page of the brower has options to load the de novo genome of your in
 
 ![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/Gene_models.png)
 
+3. Results from ortholog predictions can be loaded as a table and browsed through StaphBrowse
 
+![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/Table.png)
 
 
 
