@@ -47,9 +47,7 @@ Output for best alignment
 
 ### Ortholog identification
 
-For 50 *S. aureus* genomes we extracted the protein-coding sequences (CDS) from the gene feature format (gff) file. The CDS fasta files were then converted into individual BLAST databases for performing reciprocal best BLAST search. We required a minimum alignment length of 50 nucleotides with a e-value < 0.001 for a best reciprocal BLAST hit using the following R script.
-
-`ortholog_identification.R`
+For 50 *S. aureus* genomes we extracted the protein-coding sequences (CDS) from the gene feature format (gff) file. The CDS fasta files were then converted into individual BLAST databases for performing reciprocal best BLAST search. We required a minimum alignment length of 50 nucleotides with a e-value < 0.001 for a best reciprocal BLAST hit using the `ortholog_identification.R` script.
 
 ### JBrowse visualization of *Staphylococcus aureus* genome
 
