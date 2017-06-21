@@ -16,11 +16,10 @@ export default class App extends React.Component {
       comment: '',
       param: window.location.href.split('#')[1],
       dropText: 'Drop your FASTA file here or click here to browse file.',
-      jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2FCP014407.1&tracklist=0'
+      jbrowseUrl: 'http://localhost/jbrowse/?data=data%2FCP014407.1&tracklist=0'
     }
     this.onDrop = this.onDrop.bind(this)
     this.onContinue = this.onContinue.bind(this)
-    this.onSend = this.onSend.bind(this)
   }
 
   componentDidMount() {
@@ -31,10 +30,6 @@ export default class App extends React.Component {
 
   onDrop(files) {
     this.setState({ file: files[0], dropText: 'File selected: ' + files[0].name.substring(0, 20) + ((files[0].name.length > 10) ? '...' : '') })
-  }
-
-  onSend() {
-    request.get('http://localhost:3000/mail?comment=' + this.state.comment)
   }
 
   onContinue() {
@@ -95,7 +90,7 @@ export default class App extends React.Component {
             <p>Choose a Staph strain to display:</p>
             <Dropdown onChange={(event, data) => {
               this.setState({
-                jbrowseUrl: 'http://localhost:7777/jbrowse/?data=data%2F' + data.value
+                jbrowseUrl: 'http://localhost/jbrowse/?data=data%2F' + data.value
                 + '&tracklist=0'
               })
             }} placeholder='select strain' selection options={[
@@ -251,7 +246,9 @@ export default class App extends React.Component {
       return (
         <Container style={{ paddingTop: 10 }} text>
           <Header as='h2'>Result</Header>
-          <Image src={'jobs/' + this.state.param + '/result.png'} />
+          <p>{"Your job ID is"+this.state.param+". "}</p>
+          <p>You can now download the generated xmfa file from the icon below.</p>
+          <Image style={{marginTop: 5}} size='tiny' href={this.state.param+"/out.xmfa"} src='images/file.png' />
         </Container>
       )
     }

@@ -16,7 +16,7 @@ app.post('/upload', function (req, res) {
   req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
     console.log(filename);
     fs.mkdirSync('jobs/' + jobID);
-    filepath = 'jobs/' + jobID + '/uploaded.fna'
+    filepath = 'jobs/' + jobID + '/uploaded.fa'
     file.pipe(fs.createWriteStream(filepath));
   });
   req.busboy.on('field', function (key, value, keyTruncated, valueTruncated) {
