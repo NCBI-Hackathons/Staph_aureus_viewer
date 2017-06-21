@@ -1,7 +1,7 @@
 # StaphBrowse
-A NYGC Hackathon Project to create a genome visualization tool for *Staphylococcus aureus*
 
-Hackathon Team: Stuart Brown, Anbo Zhou, Richard Kopin and Jeffrey Vedanayagam
+A NYGC Hackathon Project to create a genome visualization tool for *Staphylococcus aureus*
+### Hackathon Team: Stuart Brown, Anbo Zhou, Richard Kopin and Jeffrey Vedanayagam
 
 *Staphylococcus aureus* is the most common cause of human bacterial infections, including the majority of hospital acquired infections. *S. aureus* has a highly variable genome, with differences between isolates that include substantial insertion/deletions of mobile elements. Disease surveillance research has led to the genome sequencing of many thousands of isolates. However, the annotation of these genome sequences does not provide researchers with a complete set of orthologs with informative names. Here, we present a computational pipeline to compare de novo sequence contigs to the set of complete RefSeq genomes for i) determining appropriate reference genome for whole-genome alignment, ii) annotation, ortholog prediction, and comparative genomics, and iii) front-end visualization of genome annotation using a versatile, user-friendly web-based genome browser. We demonstrate our pipeline using data from *S. aureus* as a paradigm, owing to its high sequence variability, and therefore less well-curated genomic sequences in public databases.
  
