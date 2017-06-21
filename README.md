@@ -23,15 +23,15 @@ Obtain 162 near-complete whole-genome sequences from NCBI
 
 `wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/717/725/`
 
-Run the best_reference.sh script
+### Run the best_reference.sh script
 
-`best_reference.sh`
+`staph_pipeline.sh`
 
 Output for best alignment 
 
 ![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/best_reference.png)
 
-JBrowse visualization of Staphylococcus aureus genome
+### JBrowse visualization of Staphylococcus aureus genome
 
 
 
