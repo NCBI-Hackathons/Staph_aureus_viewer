@@ -16,6 +16,8 @@ pyfasta (https://pypi.python.org/pypi/pyfasta/)
 
 BLAST+ (ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
 
+MAUVE (http://darlinglab.org/mauve/snapshots/2015/2015-02-13/linux-x64/mauve_linux_snapshot_2015-02-13.tar.gz)
+
 
 ## Find the best reference genome for alignment
 
