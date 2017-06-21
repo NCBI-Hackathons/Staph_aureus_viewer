@@ -16,6 +16,8 @@ MAUVE [link](http://darlinglab.org/mauve/snapshots/2015/2015-02-13/linux-x64/mau
 
 GLIMMER [link](https://ccb.jhu.edu/software/glimmer/)
 
+JBrowse [link](
+
 ## StaphBrowse workflow
 
 ![My image](https://github.com/NCBI-Hackathons/Staph_aureus_viewer/blob/master/StaphBrowse_workflow.png)
